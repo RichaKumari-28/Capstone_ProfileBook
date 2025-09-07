@@ -1,0 +1,154 @@
+/* Sidebar */
+.sidebar {
+  background: #0d1117; /* dark navy for contrast */
+  color: #fff;
+}
+
+.btn-sidebar {
+  background: #1f2937;
+  color: #f8f9fa;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 10px 12px;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.btn-sidebar:hover {
+  background: #2563eb; /* bright blue */
+  color: #fff;
+  border-color: #1d4ed8;
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.6);
+}
+
+.btn-logout {
+  background: #dc2626; /* bright red */
+  color: #fff;
+}
+
+.btn-logout:hover {
+  background: #b91c1c;
+  box-shadow: 0 0 10px rgba(220, 38, 38, 0.6);
+}
+
+/* Messages & Notifications */
+.btn-messages {
+  background: #16a34a; /* bright green */
+  color: #fff;
+  border-radius: 8px;
+}
+.btn-messages:hover {
+  background: #15803d;
+  box-shadow: 0 0 10px rgba(22, 163, 74, 0.6);
+}
+
+.btn-notifications {
+  background: #2563eb; /* blue */
+  color: #fff;
+  border-radius: 8px;
+}
+.btn-notifications:hover {
+  background: #1d4ed8;
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.6);
+}
+
+/* Profile Modal */
+.modal-dark {
+  background: #1e293b !important; /* dark blue-gray */
+  color: #fff;
+}
+
+.modal-dark .form-control-dark {
+  background: #0f172a;
+  color: #f1f5f9;
+  border: 1px solid #475569;
+}
+.modal-dark .form-control-dark:focus {
+  border-color: #3b82f6; /* blue border */
+  box-shadow: 0 0 6px #3b82f6;
+}
+
+.modal-dark .form-label {
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.modal-dark .btn-glow {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+.modal-dark .btn-glow:hover {
+  background: #1d4ed8;
+}
+
+.modal-dark .btn-glow-success {
+  background: #16a34a;
+  color: white;
+}
+.modal-dark .btn-glow-success:hover {
+  background: #15803d;
+}
+
+/* Profile Avatar */
+.profile-avatar-large {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #2563eb;
+  background: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f87171; /* red placeholder */
+  font-weight: bold;
+}
+
+/* Post Buttons */
+.btn-post {
+  background: #2563eb;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+}
+.btn-post:hover {
+  background: #1d4ed8;
+}
+
+.btn-like {
+  background: #16a34a;
+  color: white;
+  border-radius: 6px;
+}
+.btn-like:hover {
+  background: #15803d;
+}
+
+.btn-report {
+  background: #dc2626;
+  color: white;
+  border-radius: 6px;
+}
+.btn-report:hover {
+  background: #b91c1c;
+}
+
+.btn-comment {
+  background: #9333ea;
+  color: white;
+  border-radius: 6px;
+}
+.btn-comment:hover {
+  background: #7e22ce;
+}
+
+.btn-search {
+  background: #2563eb;
+  color: white;
+  border-radius: 6px;
+}
+.btn-search:hover {
+  background: #1d4ed8;
+}

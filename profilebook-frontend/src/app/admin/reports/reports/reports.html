@@ -1,0 +1,74 @@
+<div class="reports-wrapper container mt-4">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded shadow-sm bg-primary text-white">
+    <h3 class="m-0 fw-bold">Admin • Reports</h3>
+    <div class="d-flex gap-2">
+      <a class="btn btn-light btn-sm fw-semibold" href="/admin/posts">
+        <i class="bi bi-check2-square me-1"></i> Post Approvals
+      </a>
+      <a class="btn btn-light btn-sm fw-semibold" href="/posts">
+        <i class="bi bi-people-fill me-1"></i> User Posts
+      </a>
+      <button class="btn btn-warning btn-sm fw-semibold" (click)="fetchReports()" [disabled]="loading">
+        <i class="bi bi-arrow-repeat me-1"></i> {{ loading ? 'Refreshing…' : 'Refresh' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <input [(ngModel)]="q" (input)="applyFilters()" class="form-control"
+                 placeholder="Filter by reason…" />
+        </div>
+        <div class="col-md-4">
+          <input [(ngModel)]="user" (input)="applyFilters()" class="form-control"
+                 placeholder="Reporting user…" />
+        </div>
+        <div class="col-md-4">
+          <input [(ngModel)]="reported" (input)="applyFilters()" class="form-control"
+                 placeholder="Reported user…" />
+        </div>
+      </div>
+      <div class="text-end mt-3">
+        <button class="btn btn-danger fw-semibold" (click)="clearFilters()">
+          <i class="bi bi-x-circle me-1"></i> Clear Filters
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reports Table -->
+  <div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Reason</th>
+              <th scope="col">Reporting User</th>
+              <th scope="col">Reported User</th>
+              <th scope="col">Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let r of filtered">
+              <td><span class="badge bg-primary">{{ r.id }}</span></td>
+              <td>{{ r.reason }}</td>
+              <td><span class="badge bg-success">{{ r.reportingUser }}</span></td>
+              <td><span class="badge bg-danger">{{ r.reportedUser }}</span></td>
+              <td>{{ r.time ? (r.time | date:'medium') : '' }}</td>
+            </tr>
+            <tr *ngIf="!loading && !filtered.length">
+              <td colspan="5" class="text-center text-muted py-4">No reports found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,183 @@
+<div class="main-layout container-fluid px-0">
+  <div class="row g-0">
+    
+    <!-- Sidebar -->
+    <div class="col-lg-2 bg-dark text-light vh-100 sidebar shadow-sm p-3">
+      <h3 class="fw-bold text-primary mb-4">ProfileBook</h3>
+      <div class="d-grid gap-3">
+
+        <!-- My Profile -->
+        <button class="btn btn-sidebar text-start" (click)="openProfileModal()">
+          <i class="bi bi-person-circle me-2"></i> My Profile
+        </button>
+
+        <!-- Messages -->
+        <a class="btn btn-messages text-start" href="/messages">
+          <i class="bi bi-chat-dots-fill me-2"></i> Messages
+        </a>
+
+        <!-- Notifications -->
+        <a class="btn btn-notifications text-start" href="/notifications">
+          <i class="bi bi-bell-fill me-2"></i> Notifications
+        </a>
+
+        <!-- Post Approvals -->
+        <a class="btn btn-sidebar text-start" href="/admin/posts">
+          <i class="bi bi-check2-square me-2"></i> Post Approvals
+        </a>
+
+        <!-- Admin Reports -->
+        <a class="btn btn-sidebar text-start" href="/admin/reports">
+          <i class="bi bi-flag me-2"></i> Admin Reports
+        </a>
+
+        <!-- Logout -->
+        <button class="btn btn-sidebar text-start btn-logout" (click)="logout()">
+          <i class="bi bi-box-arrow-right me-2"></i> Logout
+        </button>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="col-lg-7 p-4">
+      <!-- Create Post -->
+      <div class="card shadow mb-4">
+        <div class="card-body">
+          <h5 class="card-title text-primary">Create New Post</h5>
+          <textarea [(ngModel)]="content" class="form-control mb-2" rows="3"
+            placeholder="What's on your mind?"></textarea>
+          <input type="file" (change)="onFileSelected($event)" class="form-control mb-2" />
+          <div class="d-flex justify-content-end">
+            <button (click)="createPost()" class="btn btn-post">Post</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Post Feed -->
+      <div *ngFor="let post of posts" class="card shadow mb-4">
+        <div class="card-body">
+          <h6 class="fw-bold">{{ post.userName || 'User' }}</h6>
+          <p>{{ post.content }}</p>
+          <img *ngIf="post.postImage"
+               [src]="'http://localhost:5293/' + normalizePath(post.postImage)"
+               class="img-fluid rounded mb-2" />
+
+          <div class="d-flex align-items-center gap-3">
+            <button (click)="likePost(post.id)" class="btn btn-like btn-sm">
+                Like <span class="count-badge">{{ post.likeCount }}</span>
+            </button>
+
+            <button class="btn btn-report btn-sm" (click)="toggleReportOnPost(post)">
+               {{ post._reportOpen ? 'Cancel Report' : 'Report' }}
+            </button>
+          </div>
+
+          <!-- Report form -->
+          <div *ngIf="post._reportOpen" class="mt-2">
+            <div class="input-group">
+              <input [(ngModel)]="post._reason" class="form-control"
+                     placeholder="Reason (spam, abuse, etc.)" />
+              <button class="btn btn-report" (click)="submitReportForPost(post)">Submit</button>
+            </div>
+          </div>
+
+          <!-- Comments -->
+          <div class="mt-3 border-top pt-3">
+            <h6>Comments</h6>
+            <div *ngIf="post.comments?.length; else noComments">
+              <div *ngFor="let c of post.comments" class="mb-2">
+                <strong class="text-success">{{ c.userName || 'User' }}</strong>: {{ c.text }}
+              </div>
+            </div>
+            <ng-template #noComments>
+              <p class="text-muted">No comments yet.</p>
+            </ng-template>
+
+            <div class="input-group mt-2">
+              <input [(ngModel)]="post.newComment" placeholder="Add a comment" class="form-control" />
+              <button class="btn btn-comment" (click)="commentPost(post)">Comment</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Sidebar (Search Users) -->
+    <div class="col-lg-3 bg-light p-3">
+      <h5 class="fw-bold text-primary">Find Users</h5>
+      <div class="input-group mb-3">
+        <input [(ngModel)]="userSearch" (keyup.enter)="searchUsers()" 
+               class="form-control" placeholder="Search users..." />
+        <button class="btn btn-search" (click)="searchUsers()">Search</button>
+      </div>
+
+      <div *ngIf="isSearching" class="text-muted">Searching...</div>
+      <div *ngIf="!isSearching && userResults.length">
+        <div *ngFor="let u of userResults" class="border rounded p-2 mb-2">
+          <div class="fw-semibold">{{ u.username || u.userName || u.name }}</div>
+          <div class="small text-muted">{{ u.email }}</div>
+          <button class="btn btn-report btn-sm mt-2" (click)="toggleReport(u)">
+            Report
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Profile Modal -->
+<div class="modal-backdrop fade show" *ngIf="showProfileModal" 
+     style="display:block; background: rgba(0,0,0,.75); backdrop-filter: blur(8px);"></div>
+<div class="modal fade show" tabindex="-1" role="dialog" *ngIf="showProfileModal" style="display:block;">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content modal-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ profile ? 'Edit Profile' : 'Create Profile' }}</h5>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="closeProfileModal()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <img *ngIf="profile?.profileImage" [src]="'http://localhost:5293/' + normalizePath(profile.profileImage)" 
+               class="rounded-circle profile-avatar-large" alt="Profile Image" />
+          <div class="profile-avatar-large bg-dark text-danger" *ngIf="!profile?.profileImage">
+            No Image
+          </div>
+        </div>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Full name *</label>
+            <input [(ngModel)]="profileForm.fullName" class="form-control form-control-dark" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Email</label>
+            <input [(ngModel)]="profileForm.email" class="form-control form-control-dark" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Phone</label>
+            <input [(ngModel)]="profileForm.phone" class="form-control form-control-dark" />
+          </div>
+          <div class="col-12">
+            <label class="form-label">Bio</label>
+            <textarea [(ngModel)]="profileForm.bio" rows="2" class="form-control form-control-dark"></textarea>
+          </div>
+        </div>
+        <div class="mt-4">
+          <label class="form-label">Profile image</label>
+          <div class="input-group">
+            <input type="file" class="form-control form-control-dark" (change)="onProfileImageSelected($event)" />
+            <button class="btn btn-glow" [disabled]="!profileImageFile || uploadingProfileImage" 
+                    (click)="uploadProfilePic(true)">
+              {{ uploadingProfileImage ? 'Uploading…' : 'Upload Image' }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="closeProfileModal()">Close</button>
+        <button class="btn btn-glow-success" [disabled]="savingProfile" (click)="saveProfile()">
+          {{ savingProfile ? 'Saving…' : (profile ? 'Save Changes' : 'Create Profile') }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

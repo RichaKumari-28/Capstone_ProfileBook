@@ -1,0 +1,81 @@
+/* Background with dark gradient */
+body {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Login container */
+.container {
+  max-width: 380px;
+  background: rgba(20, 20, 20, 0.95); /* much darker */
+  padding: 35px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+  text-align: center;
+  color: #f5f5f5;
+}
+
+/* Heading */
+.container h2 {
+  font-weight: 600;
+  margin-bottom: 25px;
+  color: #00e6ff;
+  letter-spacing: 1px;
+}
+
+/* Labels */
+.form-group label {
+  font-weight: 500;
+  display: block;
+  text-align: left;
+  margin-bottom: 6px;
+  color: #ddd;
+}
+
+/* Inputs */
+.form-control {
+  border-radius: 10px;
+  border: 1px solid #333;
+  padding: 12px 14px;
+  font-size: 15px;
+  background: #1c1c1c; /* darker input background */
+  color: #fff;
+  transition: 0.3s;
+}
+.form-control::placeholder {
+  color: #aaa;
+}
+.form-control:focus {
+  border-color: #00e6ff;
+  box-shadow: 0 0 8px #00e6ff;
+  outline: none;
+}
+
+/* Button */
+.btn-primary {
+  width: 100%;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: 0.3s;
+  color: #fff;
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #0072ff, #00c6ff);
+  transform: translateY(-2px);
+}
+
+/* Error message */
+.text-danger {
+  font-size: 14px;
+  margin-top: 15px;
+  color: #ff4c4c !important;
+}

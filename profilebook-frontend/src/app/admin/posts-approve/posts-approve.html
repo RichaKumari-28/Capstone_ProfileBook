@@ -1,0 +1,76 @@
+<div class="approve-wrapper container mt-4">
+
+  <!-- Header -->
+  <div class="header-bar d-flex justify-content-between align-items-center mb-4 p-3 rounded shadow-sm bg-primary">
+    <h3 class="m-0 fw-bold text-white">
+      Admin • Approve Posts
+    </h3>
+    <div class="d-flex gap-2">
+      <a class="btn btn-outline-light" href="/admin/reports">Reports</a>
+      <a class="btn btn-outline-light" href="/posts">User Posts</a>
+      <a class="btn btn-outline-light" href="/admin/users">Manage Users</a>
+      <button class="btn btn-light text-primary fw-semibold" (click)="fetch()" [disabled]="loading">
+        {{ loading ? 'Refreshing…' : 'Refresh' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="card filter-card p-3 mb-4 shadow-sm border-0">
+    <div class="row g-2 align-items-center">
+      <div class="col-md-8">
+        <input [(ngModel)]="q" (input)="apply()" 
+               class="form-control rounded-pill"
+               placeholder="🔍 Search content, username, or userId…" />
+      </div>
+      <div class="col-md-4 text-end">
+        <button class="btn btn-secondary fw-semibold rounded-pill" (click)="clear()">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post List -->
+  <div class="card post-list shadow-sm border-0">
+    <div *ngIf="!loading && !filtered.length" class="text-center text-muted py-5">
+      No pending posts.
+    </div>
+
+    <div class="list-group list-group-flush">
+      <div *ngFor="let p of filtered" class="list-group-item post-item border-0">
+        <div class="d-flex gap-3">
+
+          <!-- Post Image -->
+          <img *ngIf="p.postImage"
+               [src]="'http://localhost:5293/' + normalizePath(p.postImage)"
+               class="post-image shadow-sm rounded" />
+
+          <!-- Post Content -->
+          <div class="flex-grow-1">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <div class="fw-semibold text-dark">
+                  {{ p.username || p.user?.username || ('User #' + (p.userId || '')) }}
+                </div>
+                <div class="small text-muted">Post #{{ p.id }} • Likes: {{ p.likeCount || 0 }}</div>
+              </div>
+
+              <!-- Colorful Buttons -->
+              <div class="d-flex gap-2">
+                <button class="btn btn-success fw-semibold rounded-pill px-3" (click)="approve(p)">
+                  Approve
+                </button>
+                <button class="btn btn-danger fw-semibold rounded-pill px-3" (click)="reject(p)">
+                  Reject
+                </button>
+              </div>
+            </div>
+
+            <div class="mt-3 post-content p-3 rounded shadow-sm bg-light">
+              {{ p.content }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

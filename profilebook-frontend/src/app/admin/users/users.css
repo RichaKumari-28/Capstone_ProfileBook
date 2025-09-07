@@ -1,0 +1,86 @@
+/* Sidebar Styling */
+.sidebar {
+  background: #121212;
+}
+
+.btn-sidebar {
+  background: linear-gradient(90deg, #1a1a1a, #222);
+  border: 1px solid rgba(0, 255, 136, 0.4);
+  color: #fff;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.btn-sidebar:hover {
+  background: linear-gradient(90deg, #00ff88, #00cc66);
+  color: #000;
+  box-shadow: 0 0 12px #00ff88;
+}
+
+.btn-logout {
+  border: 1px solid rgba(255, 0, 80, 0.6);
+}
+
+.btn-logout:hover {
+  background: linear-gradient(90deg, #ff0040, #cc0033);
+  box-shadow: 0 0 12px #ff0040;
+  color: #fff;
+}
+
+/* Neon Glow Borders */
+.border-neon-glow {
+  border: 1px solid rgba(0, 255, 136, 0.6);
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.6);
+}
+
+/* Profile Avatar */
+.profile-avatar-large {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 2px solid #00ff88;
+  box-shadow: 0 0 10px #00ff88;
+}
+
+/* Buttons for Post actions */
+.btn-post {
+  background: linear-gradient(90deg, #007bff, #0056d2);
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.btn-post:hover {
+  box-shadow: 0 0 10px #007bff;
+}
+
+.btn-like {
+  background: #00cc66;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+.btn-report {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+.btn-comment {
+  background: #6f42c1;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+.btn-search {
+  background: #17a2b8;
+  color: white;
+  border-radius: 6px;
+}
